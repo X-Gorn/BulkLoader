@@ -1,0 +1,47 @@
+{
+  "name": "BulkLoader",
+  "description": "Telegram Bot to Download list of url in a text (txt file) and Upload to Telegram.",
+  "keywords": [
+    "telegram",
+    "best",
+    "bulk",
+    "downloader"
+  ],
+  "success_url": "https://github.com/X-Gorn/BulkLoader",
+  "website": "https://github.com/X-Gorn",
+  "repository": "https://github.com/X-Gorn/BulkLoader",
+  "env": {
+    "BOT_TOKEN": {
+      "description": "Your bot token, as a string.",
+      "value": ""
+    },
+    "APP_ID": {
+      "description": "Get this value from https://my.telegram.org",
+      "value": ""
+    },
+    "API_HASH": {
+      "description": "Get this value from https://my.telegram.org",
+      "value": ""
+    },
+    "OWNER_ID": {
+      "description": "Your telegram id, not username. Open https://t.me/MissRose_bot and send /id to bot",
+      "value": ""
+    },
+    "AS_ZIP": {
+      "description": "True: will zip all files and upload as zipfile | False: will upload files one by one",
+      "value": "False"
+    }
+  },
+  "addons": [
+  ],
+  "buildpacks": [{
+    "url": "heroku/python"
+  }],
+  "stack": "heroku-20",
+  "formation": {
+    "worker": {
+      "quantity": 1,
+      "size": "free"
+    }
+  }
+}

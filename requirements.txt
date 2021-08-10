@@ -1,0 +1,3 @@
+Pyrogram==1.2.9
+TgCrypto==1.2.2
+pySmartDL==1.3.4
