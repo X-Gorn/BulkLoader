@@ -1,15 +1,13 @@
 ## BulkLoader (Bot)
 ---
 
-Telegram Bot to Bulk Downloading list of URL in a text (txt file) and Upload to Telegram.
+Telegram Bot to Bulk Downloading list of urls and Upload to Telegram.
 
-#### Features:
+### Features:
 
-- Upload list of url in a text (txt file) and upload as:
-- If `AS_ZIP` is `True`:
-will zip all files and upload as zipfile
-- If `AS_ZIP` is `False`:
-will send files one by one
+#### Upload list of urls (2 methods):
+- send command `/link` and then send urls, separated by new line.
+- send txt file (links), separated by new line.
 
 ## Telegram Support:
 

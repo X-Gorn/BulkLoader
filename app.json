@@ -1,6 +1,6 @@
 {
   "name": "BulkLoader",
-  "description": "Telegram Bot to Download list of url in a text (txt file) and Upload to Telegram.",
+  "description": "Telegram Bot to Download list of urls and Upload to Telegram.",
   "keywords": [
     "telegram",
     "best",
@@ -24,11 +24,16 @@
       "value": ""
     },
     "OWNER_ID": {
-      "description": "Your telegram id, not username. Open https://t.me/MissRose_bot and send /id to bot",
-      "value": ""
+      "description": "Your telegram id, not username. Open https://t.me/MissRose_bot and send /id to bot. Left empty if you want bot public",
+      "value": "",
+      "required": false
     },
     "AS_ZIP": {
       "description": "True: will zip all files and upload as zipfile | False: will upload files one by one",
+      "value": "False"
+    },
+    "BUTTONS": {
+      "description": "True: will send buttons (Zip or One by One) instead of AZ_ZIP | False: will do as you've fill on AZ_ZIP",
       "value": "False"
     }
   },
