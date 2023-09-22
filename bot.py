@@ -1,10 +1,10 @@
-import os, time, math, shutil, pyromod.listen
+import os, time, math, shutil, pyromod.listen, asyncio
 from urllib.parse import unquote
-from pySmartDL import SmartDL
 from urllib.error import HTTPError
 from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, CallbackQuery
 from pyrogram.errors import BadRequest
+from typing import Tuple
 
 # Configs
 API_HASH = os.environ['API_HASH'] # Api hash
@@ -103,21 +103,29 @@ def TimeFormatter(milliseconds: int) -> str:
     return tmp[:-2]
 
 
-# https://github.com/viperadnan-git/google-drive-telegram-bot/blob/main/bot/helpers/downloader.py
-def download_file(url, dl_path):
-    try:
-        dl = SmartDL(url, dl_path, progress_bar=False)
-        dl.start()
-        filename = dl.get_dest()
-        if '+' in filename:
-            xfile = filename.replace('+', ' ')
-            filename2 = unquote(xfile)
-        else:
-            filename2 = unquote(filename)
-        os.rename(filename, filename2)
-        return True, filename
-    except HTTPError as error:
-        return False, error
+async def run_cmd(cmd: str) -> Tuple[str, str, int, int]:
+    process = await asyncio.create_subprocess_exec(
+        *cmd, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE
+    )
+    stdout, stderr = await process.communicate()
+    return (
+        stdout.decode("utf-8", "replace").strip(),
+        stderr.decode("utf-8", "replace").strip(),
+        process.returncode,
+        process.pid,
+    )
+
+
+async def download_file(url, dl_path):
+    command = [
+        'yt-dlp',
+        '-f', 'best',
+        '-i',
+        '-o',
+        f'"{dl_path}/%(title)s.%(ext)s"',
+        url
+    ]
+    await run_cmd(command)
 
 
 # https://github.com/MysteryBots/UnzipBot/blob/master/UnzipBot/functions.py
