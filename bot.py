@@ -126,7 +126,7 @@ async def download_file(url, dl_path):
         '-f', 'best',
         '-i',
         '-o',
-        f'"{dl_path}/%(title)s.%(ext)s"',
+        dl_path+'/%(title)s.%(ext)s',
         url
     ]
     await run_cmd(command)
@@ -167,11 +167,11 @@ async def linkloader(bot, update):
         return await xlink.reply('Uploading methods.', True, reply_markup=InlineKeyboardMarkup(CB_BUTTONS))
     elif BUTTONS == False:
         pass
-    dirs = f'/downloads/{update.from_user.id}'
+    dirs = f'downloads/{update.from_user.id}'
     if not os.path.isdir(dirs):
         os.makedirs(dirs)
     output_filename = str(update.from_user.id)
-    filename = f'./{output_filename}.zip'
+    filename = f'{dirs}/{output_filename}.zip'
     pablo = await update.reply_text('Downloading...')
     urlx = xlink.text.split('\n')
     rm, total, up = len(urlx), len(urlx), 0
@@ -232,13 +232,13 @@ async def loader(bot, update):
         return await update.reply('You wanna upload files as?', True, reply_markup=InlineKeyboardMarkup(CB_BUTTONS))
     elif BUTTONS == False:
         pass
-    dirs = f'./downloads/{update.from_user.id}'
+    dirs = f'downloads/{update.from_user.id}'
     if not os.path.isdir(dirs):
         os.makedirs(dirs)
     if not update.document.file_name.endswith('.txt'):
         return
     output_filename = update.document.file_name[:-4]
-    filename = f'./{output_filename}.zip'
+    filename = f'{dirs}/{output_filename}.zip'
     pablo = await update.reply_text('Downloading...')
     fl = await update.download()
     with open(fl) as f:
@@ -302,12 +302,12 @@ async def callbacks(bot: Client, updatex: CallbackQuery):
     cb_data = updatex.data
     update = updatex.message.reply_to_message
     await updatex.message.delete()
-    dirs = f'./downloads/{update.from_user.id}'
+    dirs = f'downloads/{update.from_user.id}'
     if not os.path.isdir(dirs):
         os.makedirs(dirs)
     if update.document:
         output_filename = update.document.file_name[:-4]
-        filename = f'./{output_filename}.zip'
+        filename = f'{dirs}/{output_filename}.zip'
         pablo = await update.reply_text('Downloading...')
         fl = await update.download()
         with open(fl) as f:
@@ -326,7 +326,7 @@ async def callbacks(bot: Client, updatex: CallbackQuery):
         os.remove(fl)
     elif update.text:
         output_filename = str(update.from_user.id)
-        filename = f'./{output_filename}.zip'
+        filename = f'{dirs}/{output_filename}.zip'
         pablo = await update.reply_text('Downloading...')
         urlx = update.text.split('\n')
         rm, total, up = len(urlx), len(urlx), 0
