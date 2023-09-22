@@ -243,7 +243,7 @@ async def loader(bot, update):
         rm, total, up = len(urlx), len(urlx), 0
         await pablo.edit_text(f"Total: {total}\nDownloaded: {up}\nDownloading: {rm}")
         for url in urlx:
-            download_file(url, dirs)
+            await download_file(url, dirs)
             up+=1
             rm-=1
             try:
@@ -312,7 +312,7 @@ async def callbacks(bot: Client, updatex: CallbackQuery):
             rm, total, up = len(urlx), len(urlx), 0
             await pablo.edit_text(f"Total: {total}\nDownloaded: {up}\nDownloading: {rm}")
             for url in urlx:
-                download_file(url, dirs)
+                await download_file(url, dirs)
                 up+=1
                 rm-=1
                 try:
@@ -328,7 +328,7 @@ async def callbacks(bot: Client, updatex: CallbackQuery):
         rm, total, up = len(urlx), len(urlx), 0
         await pablo.edit_text(f"Total: {total}\nDownloaded: {up}\nDownloading: {rm}")
         for url in urlx:
-            download_file(url, dirs)
+            await download_file(url, dirs)
             up+=1
             rm-=1
             try:
