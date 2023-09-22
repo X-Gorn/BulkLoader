@@ -5,6 +5,10 @@ from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, CallbackQuery
 from pyrogram.errors import BadRequest
 from typing import Tuple
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 # Configs
 API_HASH = os.environ['API_HASH'] # Api hash
@@ -163,7 +167,7 @@ async def linkloader(bot, update):
         return await xlink.reply('Uploading methods.', True, reply_markup=InlineKeyboardMarkup(CB_BUTTONS))
     elif BUTTONS == False:
         pass
-    dirs = f'./downloads/{update.from_user.id}'
+    dirs = f'/downloads/{update.from_user.id}'
     if not os.path.isdir(dirs):
         os.makedirs(dirs)
     output_filename = str(update.from_user.id)

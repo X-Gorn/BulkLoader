@@ -2,3 +2,4 @@ Pyrogram
 TgCrypto
 pyromod
 yt-dlp
+python-dotenv
