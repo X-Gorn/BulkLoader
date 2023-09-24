@@ -25,7 +25,7 @@ Telegram Bot to Bulk Downloading list of yt-dlp supported urls and Upload to Tel
 
 `AS_ZIP`: Set this to `true` if you want the bot to upload the files as zipfile. Default to `false`
 
-`BUTTONS`: Set this to `true` if you want the bot to ignore `AS_ZIP` and send a button instead.
+`BUTTONS`: Set this to `true` if you want the bot to ignore `AS_ZIP` and send a button instead. Default to `false`
 
 </details>
 
