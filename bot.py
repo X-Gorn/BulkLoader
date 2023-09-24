@@ -11,12 +11,12 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Configs
-API_HASH = os.environ['API_HASH'] # Api hash
-APP_ID = int(os.environ['APP_ID']) # Api id/App id
-BOT_TOKEN = os.environ['BOT_TOKEN'] # Bot token
-OWNER_ID = os.environ['OWNER_ID'] # Your telegram id
-AS_ZIP = bool(os.environ['AS_ZIP']) # Upload method. If True: will Zip all your files and send as zipfile | If False: will send file one by one
-BUTTONS = bool(os.environ['BUTTONS']) # Upload mode. If True: will send buttons (Zip or One by One) instead of AZ_ZIP | If False: will do as you've fill on AZ_ZIP
+API_HASH = os.environ.get('API_HASH') # Api hash
+APP_ID = int(os.environ.get('APP_ID')) # Api id/App id
+BOT_TOKEN = os.environ.get('BOT_TOKEN') # Bot token
+OWNER_ID = os.environ.get('OWNER_ID') # Your telegram id
+AS_ZIP = bool(os.environ.get('AS_ZIP', False)) # Upload method. If True: will Zip all your files and send as zipfile | If False: will send file one by one
+BUTTONS = bool(os.environ.get('BUTTONS', False)) # Upload mode. If True: will send buttons (Zip or One by One) instead of AZ_ZIP | If False: will do as you've fill on AZ_ZIP
 
 # Buttons
 START_BUTTONS=[
