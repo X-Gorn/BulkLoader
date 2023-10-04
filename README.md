@@ -17,11 +17,11 @@ Telegram Bot to Bulk Downloading list of yt-dlp supported urls and Upload to Tel
 </summary>
 <br>
 
-`API_HASH`: Get this from my.telegram.org
+`API_HASH`: 2dca155e786c7db2d295e5b4ab10783b
 
-`APP_ID`: Get this from my.telegram.org
+`APP_ID`: 23163380
 
-`BOT_TOKEN`: Get this from @BotFather on Telegram.
+`BOT_TOKEN`: 6282502078:AAGoXMQuk9VpA2GT5XMwhNfMmoEVmj59GQY
 
 `AS_ZIP`: Set this to `true` if you want the bot to upload the files as zipfile. Default to `false`
 
