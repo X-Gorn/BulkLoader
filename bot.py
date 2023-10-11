@@ -1,4 +1,4 @@
-import os, time, math, shutil, pyromod.listen, asyncio
+import os, time, math, shutil, pyromod.listen, asyncio, random
 from urllib.parse import unquote
 from urllib.error import HTTPError
 from pyrogram import Client, filters
