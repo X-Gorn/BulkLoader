@@ -1,4 +1,4 @@
-import os, time, math, shutil, pyromod.listen, asyncio, random
+import os, time, math, shutil, pyromod.listen, asyncio, random, shlex
 from urllib.parse import unquote
 from urllib.error import HTTPError
 from pyrogram import Client, filters
@@ -109,7 +109,9 @@ def TimeFormatter(milliseconds: int) -> str:
     return tmp[:-2]
 
 
-async def run_cmd(cmd: str) -> Tuple[str, str, int, int]:
+async def run_cmd(cmd) -> Tuple[str, str, int, int]:
+    if type(cmd) == str:
+        cmd = shlex.split(cmd)
     process = await asyncio.create_subprocess_exec(
         *cmd, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE
     )
