@@ -37,16 +37,10 @@
       "value": "False"
     }
   },
-  "addons": [
-  ],
-  "buildpacks": [{
-    "url": "heroku/python"
-  }],
-  "stack": "heroku-20",
+  "stack": "container",
   "formation": {
     "worker": {
-      "quantity": 1,
-      "size": "free"
+      "quantity": 1
     }
   }
 }

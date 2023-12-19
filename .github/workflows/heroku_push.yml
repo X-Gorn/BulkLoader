@@ -1,0 +1,24 @@
+name: Deploy to Heroku
+
+on: workflow_dispatch
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: akhileshns/heroku-deploy@v3.12.14
+        with:
+          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+          heroku_app_name: ${{ secrets.HEROKU_APP_NAME }}
+          heroku_email: ${{ secrets.HEROKU_EMAIL }}
+          usedocker: true
+          region: "us"
+          stack: "container"
+        env:
+          BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
+          APP_ID: ${{ secrets.APP_ID }}
+          API_HASH: ${{ secrets.API_HASH }}
+          OWNER_ID: ${{ secrets.OWNER_ID }}
+          AS_ZIP: ${{ secrets.AS_ZIP }}
+          BUTTONS: ${{ secrets.BUTTONS }}

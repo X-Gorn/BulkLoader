@@ -51,6 +51,16 @@ Running Docker Server
 
 </details>
 
+<details>
+<summary>
+    <b> Heroku </b>
+</summary>
+<br>
+
+<a href="https://www.heroku.com/deploy"><img src="https://www.herokucdn.com/deploy/button.svg" alt="Deploy"></a>
+
+</details>
+
 ## Telegram Support:
 
 [![Group](https://img.shields.io/badge/TG-Group-30302f?style=flat&logo=telegram)](https://t.me/WeebProgrammer)
