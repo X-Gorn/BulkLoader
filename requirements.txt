@@ -1,6 +1,6 @@
-Pyrogram
+git+https://github.com/X-Gorn/pyrogram.git@dev
 TgCrypto
-pyromod
+git+https://github.com/usernein/pyromod.git@04d0f60cc4bd4b1324101bd86391509975338327#egg=pyromod
 yt-dlp
 hachoir
 python-dotenv

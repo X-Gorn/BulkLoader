@@ -8,8 +8,11 @@ Telegram Bot to Bulk Downloading list of yt-dlp supported urls and Upload to Tel
 
 #### Upload list of urls (2 methods):
 
-- send command `/link` and then send urls, separated by new line.
-- send txt file (links), separated by new line.
+- send command `/link` and then the links.
+- send txt file with links inside it.
+- regex link search.
+
+Note: Make sure that each link is separated.
 
 <details>
 <summary>
@@ -23,7 +26,7 @@ Telegram Bot to Bulk Downloading list of yt-dlp supported urls and Upload to Tel
 
 `BOT_TOKEN`: Get this from @BotFather on Telegram.
 
-`AS_ZIP`: Set this to `true` if you want the bot to upload the files as zipfile. Default to `false`
+`AS_ZIP`: Set this to `true` if you want the bot to zip downloaded files before uploading. Default to `false`
 
 `BUTTONS`: Set this to `true` if you want the bot to ignore `AS_ZIP` and send a button instead. Default to `false`
 

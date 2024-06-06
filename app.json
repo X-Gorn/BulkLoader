@@ -24,16 +24,16 @@
       "value": ""
     },
     "OWNER_ID": {
-      "description": "Your telegram id, not username. Open https://t.me/MissRose_bot and send /id to bot. Left empty if you want bot public",
+      "description": "Your Telegram ID. (optional)",
       "value": "",
       "required": false
     },
     "AS_ZIP": {
-      "description": "True: will zip all files and upload as zipfile | False: will upload files one by one",
+      "description": "Upload method.",
       "value": "False"
     },
     "BUTTONS": {
-      "description": "True: will send buttons (Zip or One by One) instead of AZ_ZIP | False: will do as you've fill on AZ_ZIP",
+      "description": "Upload mode.",
       "value": "False"
     }
   },
