@@ -11,7 +11,7 @@ class BotClient(Client):
                                   bot_token=Config.BOT_TOKEN, plugins=Config.PLUGINS)
         self.logger: logging.Logger = logging.getLogger('bot')
         self.custom_caption: str = ""
-        self.custom_thumbnail = Union[str, None] = None
+        self.custom_thumbnail: Union[str, None] = None
 
     async def startup(self):
         await self.bot.start()
