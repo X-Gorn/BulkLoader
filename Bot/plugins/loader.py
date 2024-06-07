@@ -48,8 +48,8 @@ async def linkloader(bot: Client, update: Message):
         try:
             sended_media = await update.reply_document(
                 document=filename,
-                thumb=client.custom_thumbnail,
-                caption=client.custom_caption,
+                thumb=client.custom_thumbnail.get(update.from_user.id),
+                caption=client.custom_caption.get(update.from_user.id, ''),
                 progress=progress_for_pyrogram,
                 progress_args=(
                     'Uploading...',
@@ -61,8 +61,8 @@ async def linkloader(bot: Client, update: Message):
             await asyncio.sleep(e.value)
             sended_media = await update.reply_document(
                 document=filename,
-                thumb=client.custom_thumbnail,
-                caption=client.custom_caption,
+                thumb=client.custom_thumbnail.get(update.from_user.id),
+                caption=client.custom_caption.get(update.from_user.id, ''),
                 progress=progress_for_pyrogram,
                 progress_args=(
                     'Uploading...',
@@ -140,8 +140,8 @@ async def documentloader(bot: Client, update: Message):
         try:
             sended_media = await update.reply_document(
                 document=filename,
-                thumb=client.custom_thumbnail,
-                caption=client.custom_caption,
+                thumb=client.custom_thumbnail.get(update.from_user.id),
+                caption=client.custom_caption.get(update.from_user.id, ''),
                 progress=progress_for_pyrogram,
                 progress_args=(
                     'Uploading...',
@@ -153,8 +153,8 @@ async def documentloader(bot: Client, update: Message):
             await asyncio.sleep(e.value)
             sended_media = await update.reply_document(
                 document=filename,
-                thumb=client.custom_thumbnail,
-                caption=client.custom_caption,
+                thumb=client.custom_thumbnail.get(update.from_user.id),
+                caption=client.custom_caption.get(update.from_user.id, ''),
                 progress=progress_for_pyrogram,
                 progress_args=(
                     'Uploading...',

@@ -111,14 +111,14 @@ async def send_media(file_name: str, update: Message) -> bool:
     if os.path.isfile(file_name):
         files = file_name
         pablo = update
-        caption = client.custom_caption
+        caption = client.custom_caption.get(update.from_user.id, '')
         if not caption:
             if not '/' in files:
                 caption = files
             else:
                 caption = files.split('/')[-1]
         progress_args = ('Uploading...', pablo, time.time())
-        thumbnail = client.custom_thumbnail
+        thumbnail = client.custom_thumbnail.get(update.from_user.id)
         if files.lower().endswith(('.mkv', '.mp4')):
             metadata = extractMetadata(createParser(files))
             duration = 0
