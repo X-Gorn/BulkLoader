@@ -19,7 +19,7 @@ from .. import client
 
 
 async def no_command_filter(_, __, m: Message):
-    return not bool(m.command)
+    return bool(m.command)
 
 
 @Client.on_message(filters.regex(pattern=URL_REGEX) & filters.create(no_command_filter) & OWNER_FILTER & filters.private)
