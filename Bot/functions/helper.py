@@ -109,45 +109,43 @@ async def run_cmd(cmd) -> Tuple[str, str, int, int]:
 # Send media; ffmpeg required
 async def send_media(file_name: str, update: Message) -> bool:
     if os.path.isfile(file_name):
-        files = file_name
-        pablo = update
-        caption = client.custom_caption.get(update.from_user.id, '')
+        caption = client.custom_caption.get(update.chat.id, '')
         if not caption:
-            if not '/' in files:
-                caption = files
+            if not '/' in file_name:
+                caption = file_name
             else:
-                caption = files.split('/')[-1]
-        progress_args = ('Uploading...', pablo, time.time())
-        thumbnail = client.custom_thumbnail.get(update.from_user.id)
-        if files.lower().endswith(('.mkv', '.mp4')):
-            metadata = extractMetadata(createParser(files))
+                caption = file_name.split('/')[-1]
+        progress_args = ('Uploading...', update, time.time())
+        thumbnail = client.custom_thumbnail.get(update.chat.id)
+        if file_name.lower().endswith(('.mkv', '.mp4')):
+            metadata = extractMetadata(createParser(file_name))
             duration = 0
             if metadata is not None:
                 if metadata.has("duration"):
                     duration = metadata.get('duration').seconds
             rndmtime = str(random.randint(0, duration))
             if not thumbnail:
-                thumbnail = files+'.jpg'
-                await run_cmd(f'ffmpeg -ss {rndmtime} -i "{files}" -vframes 1 "{thumbnail}"')
-            sended_media = await update.reply_video(files, caption=caption, duration=duration, thumb=thumbnail, progress=progress_for_pyrogram, progress_args=progress_args)
-        elif files.lower().endswith(('.jpg', '.jpeg', '.png')):
+                thumbnail = file_name+'.jpg'
+                await run_cmd(f'ffmpeg -ss {rndmtime} -i "{file_name}" -vframes 1 "{thumbnail}"')
+            sended_media = await update.reply_video(file_name, caption=caption, duration=duration, thumb=thumbnail, progress=progress_for_pyrogram, progress_args=progress_args)
+        elif file_name.lower().endswith(('.jpg', '.jpeg', '.png')):
             try:
-                sended_media = await update.reply_photo(files, caption=caption, progress=progress_for_pyrogram, progress_args=progress_args)
+                sended_media = await update.reply_photo(file_name, caption=caption, progress=progress_for_pyrogram, progress_args=progress_args)
             except Exception:
                 client.logger.warning(traceback.format_exc())
-                sended_media = await update.reply_document(files, caption=caption, thumb=thumbnail, progress=progress_for_pyrogram, progress_args=progress_args)
-        elif files.lower().endswith(('.mp3')):
+                sended_media = await update.reply_document(file_name, caption=caption, thumb=thumbnail, progress=progress_for_pyrogram, progress_args=progress_args)
+        elif file_name.lower().endswith(('.mp3')):
             duration = 0
             if metadata is not None:
                 if metadata.has("duration"):
                     duration = metadata.get('duration').seconds
             try:
-                sended_media = await update.reply_audio(files, caption=caption, duration=duration, thumb=thumbnail, progress=progress_for_pyrogram, progress_args=progress_args)
+                sended_media = await update.reply_audio(file_name, caption=caption, duration=duration, thumb=thumbnail, progress=progress_for_pyrogram, progress_args=progress_args)
             except Exception as e:
                 client.logger.warning(traceback.format_exc())
-                sended_media = await update.reply_document(files, caption=caption, thumb=thumbnail, progress=progress_for_pyrogram, progress_args=progress_args)
+                sended_media = await update.reply_document(file_name, caption=caption, thumb=thumbnail, progress=progress_for_pyrogram, progress_args=progress_args)
         else:
-            sended_media = await update.reply_document(files, caption=caption, thumb=thumbnail, progress=progress_for_pyrogram, progress_args=progress_args)
+            sended_media = await update.reply_document(file_name, caption=caption, thumb=thumbnail, progress=progress_for_pyrogram, progress_args=progress_args)
         if Config.DUMP_ID:
             try:
                 await sended_media.forward(Config.DUMP_ID)
