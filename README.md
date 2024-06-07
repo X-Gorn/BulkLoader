@@ -2,7 +2,7 @@
 
 ---
 
-Telegram Bot to Bulk Downloading list of yt-dlp supported urls and Upload to Telegram.
+Telegram Bot to Bulk Downloading list of yt-dlp/ffmpeg supported urls and Upload to Telegram.
 
 ### Features:
 
@@ -23,6 +23,18 @@ Note: To clear thumbnail or the caption. do the command without args. ex: `/thum
 - regex link search.
 
 Note: Make sure that each link is separated.
+
+### Supported Links
+
+#### FFMPEG
+
+ftp, amqp, rtmp, mmsh, mmst, icecast, rtmpe, rtmps, rtmpt, rtmpte, rtmpts, smb, sftp, rtp, rtsp, sap, sctp, srt, srtp, tcp, tls, udp, unix, zmq.
+
+https://www.ffmpeg.org/ffmpeg-protocols.html
+
+#### YT-DLP
+
+https://github.com/yt-dlp/yt-dlp/blob/master/supportedsites.md
 
 <details>
 <summary>

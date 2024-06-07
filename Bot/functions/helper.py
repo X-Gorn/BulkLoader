@@ -15,6 +15,9 @@ from ..config import Config
 from .. import client
 
 
+FFMPEG_REGEX = re.compile(
+    pattern=r'(?:ftp|amqp|rtmp|mmsh|mmst|icecast|rtmpe|rtmps|rtmpt|rtmpte|rtmpts|smb|sftp|rtp|rtsp|sap|sctp|srt|srtp|tcp|tls|udp|unix|zmq)://(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&//=]*)')
+
 # Detect URLS using Regex. https://stackoverflow.com/a/3809435/15561455
 URL_REGEX = re.compile(
     pattern=r'https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&//=]*)')
@@ -162,6 +165,13 @@ async def send_media(file_name: str, update: Message) -> bool:
 async def download_file(url: str, dl_path: str):
     command = 'yt-dlp -vU -f best -i -o "{}/%(title)s.%(ext)s" "{}"'.format(
         dl_path, url
+    )
+    await run_cmd(command)
+
+
+async def stream_ffmpeg(url: str, dl_path: str):
+    command = 'ffmpeg -i "{}" -c copy "{}"'.format(
+        url, dl_path,
     )
     await run_cmd(command)
 
