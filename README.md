@@ -8,8 +8,11 @@ Telegram Bot to Bulk Downloading list of yt-dlp supported urls and Upload to Tel
 
 #### Upload list of urls (2 methods):
 
-- send command `/link` and then the links.
+- send links.
 - send txt file with links inside it.
+
+#### Link search method:
+
 - regex link search.
 
 Note: Make sure that each link is separated.
@@ -27,8 +30,6 @@ Note: Make sure that each link is separated.
 `BOT_TOKEN`: Get this from @BotFather on Telegram.
 
 `AS_ZIP`: Set this to `true` if you want the bot to zip downloaded files before uploading. Default to `false`
-
-`BUTTONS`: Set this to `true` if you want the bot to ignore `AS_ZIP` and send a button instead. Default to `false`
 
 </details>
 
@@ -50,7 +51,7 @@ Refresh User State
 
 Running Docker Server
 
-`docker run -d -e API_HASH=abc -e APP_ID=123 -e BOT_TOKEN="123:abc" -e OWNER_ID=12345678 -e AS_ZIP=false -e BUTTONS=true xgorn/bulkloader:latest`
+`docker run -d -e API_HASH=abc -e APP_ID=123 -e BOT_TOKEN="123:abc" -e OWNER_ID=12345678 -e AS_ZIP=false xgorn/bulkloader:latest`
 
 </details>
 
