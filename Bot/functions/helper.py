@@ -13,9 +13,6 @@ from pyrogram.types import Message
 from .. import client
 
 
-CALLBACK_REGEX = re.compile(r'^zip|1by1$')
-
-
 # Detect URLS using Regex. https://stackoverflow.com/a/3809435/15561455
 URL_REGEX = re.compile(
     pattern=r'https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&//=]*)')
@@ -147,14 +144,9 @@ async def send_media(file_name: str, update: Message) -> bool:
 
 
 async def download_file(url: str, dl_path: str):
-    command = [
-        'yt-dlp',
-        '-f', 'best',
-        '-i',
-        '-o',
-        dl_path+'/%(title)s.%(ext)s',
-        url
-    ]
+    command = 'yt-dlp -vU -f best -i -o "{}/%(title)s.%(ext)s" "{}"'.format(
+        dl_path, url
+    )
     await run_cmd(command)
 
 
