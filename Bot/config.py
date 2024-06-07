@@ -1,6 +1,7 @@
 from distutils.util import strtobool
 import os
 from dotenv import load_dotenv
+from pyrogram.types import BotCommand
 
 
 # Load environment variables from .env file
@@ -31,3 +32,10 @@ class Config(object):
     PLUGINS = {'root': 'Bot.plugins'}
 
     DOWNLOAD_DIR = "./downloads/"
+
+    BOT_COMMANDS = [
+        BotCommand('start', 'start bot'),
+        BotCommand('help', 'help messages'),
+        BotCommand('thumbnail', 'custom thumbnail'),
+        BotCommand('caption', 'custom caption')
+    ]
