@@ -1,6 +1,6 @@
 from pyrogram import Client, filters
 from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton
-from functions.filters import OWNER_FILTER
+from ..functions.filters import OWNER_FILTER
 
 
 reply_markup = InlineKeyboardMarkup([

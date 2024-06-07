@@ -3,8 +3,8 @@ import time
 import shutil
 import asyncio
 import traceback
-from functions.filters import OWNER_FILTER
-from functions.helper import (
+from ..functions.filters import OWNER_FILTER
+from ..functions.helper import (
     progress_for_pyrogram, 
     download_file, 
     absolute_paths, 
