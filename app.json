@@ -31,10 +31,6 @@
     "AS_ZIP": {
       "description": "Upload method.",
       "value": "False"
-    },
-    "BUTTONS": {
-      "description": "Upload mode.",
-      "value": "False"
     }
   },
   "stack": "container",

@@ -23,7 +23,6 @@ class Config(object):
     # Upload method (default to False)
     AS_ZIP = bool(os.environ.get('AS_ZIP', False))
 
-    # Upload mode. (default to False)
-    BUTTONS = bool(os.environ.get('BUTTONS', False))
-
     PLUGINS = {'root': 'Bot.plugins'}
+    
+    DOWNLOAD_DIR = "./downloads/"
