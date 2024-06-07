@@ -29,7 +29,9 @@ Note: Make sure that each link is separated.
 
 `BOT_TOKEN`: Get this from @BotFather on Telegram.
 
-`AS_ZIP`: Set this to `true` if you want the bot to zip downloaded files before uploading. Default to `false`
+`OWNER_ID`: Your Telegram ID.
+
+`AS_ZIP`: Set this to `True` if you want the bot to zip downloaded files before uploading. Default to `False`
 
 </details>
 
@@ -49,9 +51,20 @@ Refresh User State
 
 `sudo su -l $USER`
 
-Running Docker Server
+Run Docker Container
 
-`docker run -d -e API_HASH=abc -e APP_ID=123 -e BOT_TOKEN="123:abc" -e OWNER_ID=12345678 -e AS_ZIP=false xgorn/bulkloader:latest`
+`docker run --name=bulkloader -d -e API_HASH=abc -e APP_ID=123 -e BOT_TOKEN="123:abc" -e OWNER_ID=12345678 -e AS_ZIP=False xgorn/bulkloader:latest`
+
+Stop and Remove Docker Container (useful when you want to update the image to the latest and run it again)
+
+```
+docker stop bulkloader
+docker rm bulkloader
+```
+
+Update Image to Latest
+
+`docker pull xgorn/bulkloader:latest`
 
 </details>
 
