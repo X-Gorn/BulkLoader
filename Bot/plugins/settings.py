@@ -17,7 +17,7 @@ async def no_args_filter(_, __, m: Message):
 @Client.on_message(filters.private & OWNER_FILTER & filters.command('caption'))
 async def custom_caption(bot: Client, update: Message):
     try:
-        caption = update.text.split(' ', 1)[1]
+        caption = update.text.html.split(' ', 1)[1]
         await update.reply(text='Custom caption updated.')
     except IndexError:
         if not client.custom_caption.get(update.from_user.id):

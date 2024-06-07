@@ -12,17 +12,13 @@ from ..functions.helper import (
     URL_REGEX
 )
 from ..config import Config
-from pyrogram import Client, filters
+from pyrogram import Client, filters, enums
 from pyrogram.types import Message
 from pyrogram.errors import FloodWait
 from .. import client
 
 
-async def no_command_filter(_, __, m: Message):
-    return bool(m.command)
-
-
-@Client.on_message(filters.regex(pattern=URL_REGEX) & filters.create(no_command_filter) & OWNER_FILTER & filters.private)
+@Client.on_message(~filters.command(['thumbnail', 'caption']) & filters.regex(pattern=URL_REGEX) & OWNER_FILTER & filters.private)
 async def linkloader(bot: Client, update: Message):
     dirs = f'{Config.DOWNLOAD_DIR}{update.from_user.id}'
     if not os.path.isdir(dirs):
