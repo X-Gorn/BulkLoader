@@ -1,7 +1,6 @@
 import logging
 from .config import Config
 from pyrogram import Client
-import pyromod.listen
 
 
 class BotClient(Client):
