@@ -18,7 +18,11 @@ from pyrogram.errors import FloodWait
 from .. import client
 
 
-@Client.on_message(filters.regex(pattern=URL_REGEX) & OWNER_FILTER & filters.private)
+async def no_command_filter(_, __, m: Message):
+    return not bool(m.command)
+
+
+@Client.on_message(filters.regex(pattern=URL_REGEX) & filters.create(no_command_filter) & OWNER_FILTER & filters.private)
 async def linkloader(bot: Client, update: Message):
     dirs = f'{Config.DOWNLOAD_DIR}{update.from_user.id}'
     if not os.path.isdir(dirs):
