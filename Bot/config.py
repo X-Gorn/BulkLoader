@@ -1,3 +1,4 @@
+from distutils.util import strtobool
 import os
 from dotenv import load_dotenv
 
@@ -21,8 +22,8 @@ class Config(object):
     OWNER_ID = os.environ.get('OWNER_ID')
 
     # Upload method (default to False)
-    AS_ZIP = bool(os.environ.get('AS_ZIP', False))
+    AS_ZIP = bool(strtobool(os.environ.get('AS_ZIP', 'False')))
 
     PLUGINS = {'root': 'Bot.plugins'}
-    
+
     DOWNLOAD_DIR = "./downloads/"

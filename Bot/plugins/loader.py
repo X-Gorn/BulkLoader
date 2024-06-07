@@ -5,10 +5,10 @@ import asyncio
 import traceback
 from ..functions.filters import OWNER_FILTER
 from ..functions.helper import (
-    progress_for_pyrogram, 
-    download_file, 
-    absolute_paths, 
-    send_media, 
+    progress_for_pyrogram,
+    download_file,
+    absolute_paths,
+    send_media,
     URL_REGEX
 )
 from ..config import Config
@@ -23,8 +23,7 @@ async def linkloader(bot: Client, update: Message):
     dirs = f'{Config.DOWNLOAD_DIR}{update.from_user.id}'
     if not os.path.isdir(dirs):
         os.makedirs(dirs)
-    output_filename = str(update.from_user.id)
-    filename = f'{dirs}{output_filename}.zip'
+    filename = f'{dirs}.zip'
     pablo = await update.reply_text('Downloading...')
     urls = URL_REGEX.findall(update.text)
     rm, total, up = len(urls), len(urls), 0
@@ -44,7 +43,7 @@ async def linkloader(bot: Client, update: Message):
             client.logger.warning(traceback.format_exc())
     await pablo.edit_text('Uploading...')
     if Config.AS_ZIP:
-        shutil.make_archive(output_filename, 'zip', dirs)
+        shutil.make_archive(dirs, 'zip', dirs)
         start_time = time.time()
         await update.reply_document(
             filename,
@@ -87,8 +86,7 @@ async def loader(bot: Client, update: Message):
         os.makedirs(dirs)
     if not update.document.file_name.endswith(('.txt', '.text')):
         return
-    output_filename = update.document.file_name[:-4]
-    filename = f'{Config.DOWNLOAD_DIR}{output_filename}.zip'
+    filename = f'{Config.DOWNLOAD_DIR}.zip'
     pablo = await update.reply_text('Downloading...')
     fl = await update.download()
     with open(fl) as f:
@@ -111,7 +109,7 @@ async def loader(bot: Client, update: Message):
             client.logger.warning(traceback.format_exc())
     await pablo.edit_text('Uploading...')
     if Config.AS_ZIP:
-        shutil.make_archive(output_filename, 'zip', dirs)
+        shutil.make_archive(dirs, 'zip', dirs)
         start_time = time.time()
         try:
             await update.reply_document(
