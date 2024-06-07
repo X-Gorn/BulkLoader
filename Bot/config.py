@@ -24,6 +24,10 @@ class Config(object):
     # Upload method (default to False)
     AS_ZIP = bool(strtobool(os.environ.get('AS_ZIP', 'False')))
 
+    # Channel/Group ID where you dump all the downloaded files.
+    DUMP_ID = int(os.environ.get('DUMP_ID')
+                  ) if os.environ.get('DUMP_ID') else None
+
     PLUGINS = {'root': 'Bot.plugins'}
 
     DOWNLOAD_DIR = "./downloads/"

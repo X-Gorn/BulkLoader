@@ -7,9 +7,11 @@ import re
 import random
 import traceback
 from typing import Tuple
+from pyrogram.errors import FloodWait
 from hachoir.metadata import extractMetadata
 from hachoir.parser import createParser
 from pyrogram.types import Message
+from ..config import Config
 from .. import client
 
 
@@ -109,11 +111,14 @@ async def send_media(file_name: str, update: Message) -> bool:
     if os.path.isfile(file_name):
         files = file_name
         pablo = update
-        if not '/' in files:
-            caption = files
-        else:
-            caption = files.split('/')[-1]
+        caption = client.custom_caption
+        if not caption:
+            if not '/' in files:
+                caption = files
+            else:
+                caption = files.split('/')[-1]
         progress_args = ('Uploading...', pablo, time.time())
+        thumbnail = client.custom_thumbnail
         if files.lower().endswith(('.mkv', '.mp4')):
             metadata = extractMetadata(createParser(files))
             duration = 0
@@ -121,23 +126,36 @@ async def send_media(file_name: str, update: Message) -> bool:
                 if metadata.has("duration"):
                     duration = metadata.get('duration').seconds
             rndmtime = str(random.randint(0, duration))
-            await run_cmd(f'ffmpeg -ss {rndmtime} -i "{files}" -vframes 1 thumbnail.jpg')
-            await update.reply_video(files, caption=caption, duration=duration, thumb='thumbnail.jpg', progress=progress_for_pyrogram, progress_args=progress_args)
-            os.remove('thumbnail.jpg')
+            if not thumbnail:
+                thumbnail = files+'.jpg'
+                await run_cmd(f'ffmpeg -ss {rndmtime} -i "{files}" -vframes 1 "{thumbnail}"')
+            sended_media = await update.reply_video(files, caption=caption, duration=duration, thumb=thumbnail, progress=progress_for_pyrogram, progress_args=progress_args)
         elif files.lower().endswith(('.jpg', '.jpeg', '.png')):
             try:
-                await update.reply_photo(files, caption=caption, progress=progress_for_pyrogram, progress_args=progress_args)
-            except Exception as e:
-                print(e)
-                await update.reply_document(files, caption=caption, progress=progress_for_pyrogram, progress_args=progress_args)
+                sended_media = await update.reply_photo(files, caption=caption, progress=progress_for_pyrogram, progress_args=progress_args)
+            except Exception:
+                client.logger.warning(traceback.format_exc())
+                sended_media = await update.reply_document(files, caption=caption, thumb=thumbnail, progress=progress_for_pyrogram, progress_args=progress_args)
         elif files.lower().endswith(('.mp3')):
+            duration = 0
+            if metadata is not None:
+                if metadata.has("duration"):
+                    duration = metadata.get('duration').seconds
             try:
-                await update.reply_audio(files, caption=caption, progress=progress_for_pyrogram, progress_args=progress_args)
+                sended_media = await update.reply_audio(files, caption=caption, duration=duration, thumb=thumbnail, progress=progress_for_pyrogram, progress_args=progress_args)
             except Exception as e:
-                print(e)
-                await update.reply_document(files, caption=caption, progress=progress_for_pyrogram, progress_args=progress_args)
+                client.logger.warning(traceback.format_exc())
+                sended_media = await update.reply_document(files, caption=caption, thumb=thumbnail, progress=progress_for_pyrogram, progress_args=progress_args)
         else:
-            await update.reply_document(files, caption=caption, progress=progress_for_pyrogram, progress_args=progress_args)
+            sended_media = await update.reply_document(files, caption=caption, thumb=thumbnail, progress=progress_for_pyrogram, progress_args=progress_args)
+        if Config.DUMP_ID:
+            try:
+                await sended_media.forward(Config.DUMP_ID)
+            except FloodWait as e:
+                await asyncio.sleep(e.value)
+                await sended_media.forward(Config.DUMP_ID)
+            except Exception:
+                client.logger.warning(traceback.format_exc())
         return True
     else:
         return False

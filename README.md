@@ -6,6 +6,13 @@ Telegram Bot to Bulk Downloading list of yt-dlp supported urls and Upload to Tel
 
 ### Features:
 
+#### Settings
+
+- `/thumbnail`: custom thumbnail. ex: reply to a photo or do `/thumbnail https...jpg`
+- `/caption`: custom thumbnail. ex: `/caption abc`
+
+Note: To clear thumbnail or the caption. do the command without args. ex: `/thumbnail` or `/caption`
+
 #### Upload list of urls (2 methods):
 
 - send links.
@@ -31,6 +38,8 @@ Note: Make sure that each link is separated.
 
 `OWNER_ID`: Your Telegram ID.
 
+`DUMP_ID`: Your Telegram Channel/Group ID to Dump the Uploaded Files. let it empty if you don't need it.
+
 `AS_ZIP`: Set this to `True` if you want the bot to zip downloaded files before uploading. Default to `False`
 
 </details>
@@ -55,6 +64,10 @@ Run Docker Container
 
 `docker run --name=bulkloader -d -e API_HASH=abc -e APP_ID=123 -e BOT_TOKEN="123:abc" -e OWNER_ID=12345678 -e AS_ZIP=False xgorn/bulkloader:latest`
 
+Restart Docker Container
+
+`docker restart bulkloader`
+
 Stop and Remove Docker Container (useful when you want to update the image to the latest and run it again)
 
 ```
@@ -65,6 +78,10 @@ docker rm bulkloader
 Update Image to Latest
 
 `docker pull xgorn/bulkloader:latest`
+
+Redeploy Docker Container with Latest Image(one command)
+
+`docker stop bulkloader && docker rm bulkloader && docker pull xgorn/bulkloader:latest && docker run --name=bulkloader -d -e API_HASH=abc -e APP_ID=123 -e BOT_TOKEN="123:abc" -e OWNER_ID=12345678 -e AS_ZIP=False xgorn/bulkloader:latest`
 
 </details>
 

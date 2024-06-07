@@ -31,6 +31,11 @@
     "AS_ZIP": {
       "description": "Upload method.",
       "value": "False"
+    },
+    "DUMP_ID": {
+      "description": "Dump Channel/Group. (optional)",
+      "value": "",
+      "required": false
     }
   },
   "stack": "container",

@@ -45,15 +45,41 @@ async def linkloader(bot: Client, update: Message):
     if Config.AS_ZIP:
         shutil.make_archive(dirs, 'zip', dirs)
         start_time = time.time()
-        await update.reply_document(
-            filename,
-            progress=progress_for_pyrogram,
-            progress_args=(
-                'Uploading...',
-                pablo,
-                start_time
+        try:
+            sended_media = await update.reply_document(
+                document=filename,
+                thumb=client.custom_thumbnail,
+                caption=client.custom_caption,
+                progress=progress_for_pyrogram,
+                progress_args=(
+                    'Uploading...',
+                    pablo,
+                    start_time
+                )
             )
-        )
+        except FloodWait as e:
+            await asyncio.sleep(e.value)
+            sended_media = await update.reply_document(
+                document=filename,
+                thumb=client.custom_thumbnail,
+                caption=client.custom_caption,
+                progress=progress_for_pyrogram,
+                progress_args=(
+                    'Uploading...',
+                    pablo,
+                    start_time
+                )
+            )
+        except Exception:
+            client.logger.warning(traceback.format_exc())
+        if Config.DUMP_ID:
+            try:
+                await sended_media.forward(Config.DUMP_ID)
+            except FloodWait as e:
+                await asyncio.sleep(e.value)
+                await sended_media.forward(Config.DUMP_ID)
+            except Exception:
+                client.logger.warning(traceback.format_exc())
         await pablo.delete()
         os.remove(filename)
         shutil.rmtree(dirs)
@@ -80,7 +106,7 @@ async def linkloader(bot: Client, update: Message):
 
 
 @Client.on_message(filters.document & OWNER_FILTER & filters.private)
-async def loader(bot: Client, update: Message):
+async def documentloader(bot: Client, update: Message):
     dirs = f'{Config.DOWNLOAD_DIR}{update.from_user.id}'
     if not os.path.isdir(dirs):
         os.makedirs(dirs)
@@ -112,8 +138,10 @@ async def loader(bot: Client, update: Message):
         shutil.make_archive(dirs, 'zip', dirs)
         start_time = time.time()
         try:
-            await update.reply_document(
-                filename,
+            sended_media = await update.reply_document(
+                document=filename,
+                thumb=client.custom_thumbnail,
+                caption=client.custom_caption,
                 progress=progress_for_pyrogram,
                 progress_args=(
                     'Uploading...',
@@ -123,8 +151,10 @@ async def loader(bot: Client, update: Message):
             )
         except FloodWait as e:
             await asyncio.sleep(e.value)
-            await update.reply_document(
-                filename,
+            sended_media = await update.reply_document(
+                document=filename,
+                thumb=client.custom_thumbnail,
+                caption=client.custom_caption,
                 progress=progress_for_pyrogram,
                 progress_args=(
                     'Uploading...',
@@ -134,6 +164,14 @@ async def loader(bot: Client, update: Message):
             )
         except Exception:
             client.logger.warning(traceback.format_exc())
+        if Config.DUMP_ID:
+            try:
+                await sended_media.forward(Config.DUMP_ID)
+            except FloodWait as e:
+                await asyncio.sleep(e.value)
+                await sended_media.forward(Config.DUMP_ID)
+            except Exception:
+                client.logger.warning(traceback.format_exc())
         await pablo.delete()
         os.remove(filename)
         shutil.rmtree(dirs)
