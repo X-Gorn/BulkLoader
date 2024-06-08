@@ -20,17 +20,17 @@ from pyrogram.errors import FloodWait
 from .. import client
 
 
-async def ffmpeg_background_task(url, dirs, fn, current_timestamp, total, pablo):
+async def ffmpeg_background_task(url, dirs, fn, current_timestamp, total, up, rm, pablo):
     await stream_ffmpeg(url, '{}/{}-{}.mp4'.format(dirs, fn, current_timestamp))
-    up += 1
-    rm -= 1
+    up[0] += 1
+    rm[0] -= 1
     try:
-        await pablo.edit_text(f"Total: {total}\nDownloaded: {up}\nDownloading: {rm}")
+        await pablo.edit_text(f"Total: {total[0]}\nDownloaded: {up[0]}\nDownloading: {rm[0]}")
     except FloodWait as e:
         client.logger.warning(
-                'Floodwait for {} seconds'.format(e.value))
+            'Floodwait for {} seconds'.format(e.value))
         await asyncio.sleep(e.value)
-        await pablo.edit_text(f"Total: {total}\nDownloaded: {up}\nDownloading: {rm}")
+        await pablo.edit_text(f"Total: {total[0]}\nDownloaded: {up[0]}\nDownloading: {rm[0]}")
     except Exception:
         client.logger.warning(traceback.format_exc())
 
@@ -131,13 +131,17 @@ async def ffmpeg_linkloader(bot: Client, update: Message):
     pablo = await update.reply_text('Downloading...')
     urls = FFMPEG_REGEX.findall(update.text)
     rm, total, up = len(urls), len(urls), 0
+    # Make up, rm and total mutable
+    up_list = [up]
+    rm_list = [rm]
+    total_list = [total]
     await pablo.edit_text(f"Total: {total}\nDownloaded: {up}\nDownloading: {rm}")
     tasks = []
     for url in urls:
         fn = url.split('/')[-1]
         current_timestamp = int(time.time())
         tasks.append(ffmpeg_background_task(
-            url, dirs, fn, current_timestamp, total, pablo))
+            url, dirs, fn, current_timestamp, total_list, up_list, rm_list, pablo))
     await asyncio.gather(*tasks)
     await pablo.edit_text('Uploading...')
     if Config.AS_ZIP:
